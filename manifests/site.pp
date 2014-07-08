@@ -1,4 +1,5 @@
-node /vm-jboss*/ {
+node 'template-jboss' {
+
   notice("Setting host $fqdn using Puppet ($puppetversion).")
   
   $profile_name='ifce'
@@ -11,3 +12,7 @@ node /vm-jboss*/ {
   jboss-as::os_tuning { 'soap-tuning': }
 
 }
+
+node /vm-jboss*/ inherits template-jboss {}
+
+node vm-puppet inherits template-jboss {}
