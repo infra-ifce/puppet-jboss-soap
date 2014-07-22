@@ -1,4 +1,4 @@
-define jboss-as::base($product_name='jboss-soap', $product_home='/usr/share/jboss-soap/jboss-as/', $profile='production', $jvm_memory='2048') {
+define jboss-as::base($product_name='jboss-soap', $product_home='/usr/share/jboss-soap/jboss-as/', $profile='production', $jvm_memory='2048', $proxy_list="$fqdn:6666") {
 
   $perm_size='256'
   $user='jboss'

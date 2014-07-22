@@ -94,5 +94,7 @@ JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote"
 JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote.port=50000"
 JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote.authenticate=false"
 JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote.ssl=false"
-#
+
+# Mod Cluster
+JAVA_OPTS="${JAVA_OPTS} -Djboss.modcluster.proxyList=<%= proxy_list %>"
                 
