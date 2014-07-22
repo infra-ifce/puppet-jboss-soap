@@ -12,13 +12,18 @@ node 'template-jboss' {
 #    require => Jboss-As::Os_Tuning['soap-tuning'],
 #  }
   jboss-as::os_tuning { 'soap-tuning': } 
-  
+
+  jboss-as::jvmRoute { "$profile_name-$fqdn":
+    product_home => $product_home,
+    profile => $profile_name,
+  }
+ 
   file { "/etc/init.d/jboss-soap-$profile_name-1": 
     ensure => link,
     target => '/etc/init.d/jboss-soap',
     require => Package['jboss-soap']
   }
- 
+
   service { "jboss-soap-$profile_name-1":
     ensure => running,
     enable => true,
@@ -35,6 +40,7 @@ node /vm-jboss*/ inherits template-jboss {
     jvm_memory => '2048',
     proxy_list => "vm-frontlb.ifce.lan:6666",
   } 
+
 }
 
 node /vm-frontlb*/ inherits template-frontlb {

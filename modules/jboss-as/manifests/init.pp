@@ -45,3 +45,13 @@ define jboss-as::os_tuning($kernel_shmmax='4294967296', $kernel_shmall='1048576'
   sysctl { 'vm.hugetlb_shm_group': value => $vm_hugetlb_shm_group }
   sysctl { 'vm.nr_hugepages': value => $kernel_shmall }
 }
+
+define jboss-as::jvmRoute($jvmRoute=$name, $product_home, $profile, $user='jboss', $group='jboss', $product_name='jboss-soap') {
+  
+  file { "$product_home/server/$profile/deploy/jbossweb.sar/server.xml":
+    content => template("jboss-as/server.xml.erb"),
+    owner => $user,
+    group => $group,
+    require => Package[$product_name],
+  }
+}
