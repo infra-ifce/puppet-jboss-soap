@@ -5,7 +5,7 @@ node 'template-jboss' {
   $profile_name='ifce'
   $product_home='/usr/share/jboss-soap/jboss-as/'
   $profile='production'
-
+  
 #  FIXME: to finish
 #  httpd::mod_cluster_client { 'mod_cluster_libs':
 #    deploy_folder => "$product_home/server/$profile/deploy",
@@ -16,6 +16,18 @@ node 'template-jboss' {
   httpd::mod_cluster { 'conf_mod_cluster_jboss':
     jboss_server_xml => "$product_home/server/$profile/deploy/jbossweb.sar/server.xml", 
     notify => Service['jboss-soap']
+  }
+
+  file { "/etc/init.d/jboss-soap-$profile_name-1": 
+    ensure => link,
+    target => '/etc/init.d/jboss-soap',
+    require => Package['jboss-soap']
+  }
+ 
+  service { "jboss-soap-$profile_name-1":
+    ensure => running,
+    enable => true,
+    require => File["/etc/init.d/jboss-soap-$profile_name-1"]
   }
 }
 
