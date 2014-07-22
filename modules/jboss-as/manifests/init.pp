@@ -11,12 +11,6 @@ define jboss-as::base($product_name='jboss-soap', $product_home='/usr/share/jbos
     ensure => installed,
   }
 
-  service  { $product_name:
-    ensure => 'running',
-    enable => true,
-    require => File['/usr/share/jboss-soap/jboss-as/server/production/log']
-  }
-
   file { '/usr/share/jboss-soap/jboss-as/server/production/log':
     ensure => directory,
     owner => $user,
@@ -29,7 +23,6 @@ define jboss-as::base($product_name='jboss-soap', $product_home='/usr/share/jbos
     owner => $user,
     group => $group,
     require => Package[$product_name],
-    notify => Service[$product_name]
   }
 
   file { "$product_home/server/$profile/conf/props/soa-users.properties":

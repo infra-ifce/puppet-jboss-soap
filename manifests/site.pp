@@ -13,11 +13,6 @@ node 'template-jboss' {
 #  }
   jboss-as::os_tuning { 'soap-tuning': } 
   
-  httpd::mod_cluster { 'conf_mod_cluster_jboss':
-    jboss_server_xml => "$product_home/server/$profile/deploy/jbossweb.sar/server.xml", 
-    notify => Service['jboss-soap']
-  }
-
   file { "/etc/init.d/jboss-soap-$profile_name-1": 
     ensure => link,
     target => '/etc/init.d/jboss-soap',
