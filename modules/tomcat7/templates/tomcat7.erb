@@ -1,0 +1,78 @@
+#!/bin/bash
+
+readonly CATALINA_BASE=${CATALINA_BASE:-'<%= @catalina_base %>'}
+<% if defined? catalina_home != nil  %>
+readonly CATALINA_HOME="<%= @catalina_home %>"
+<% else %>
+readonly CATALINA_HOME=${CATALINA_HOME:-${CATALINA_BASE}}
+<% end %>
+
+if [ -r /usr/share/java-utils/java-functions ]; then
+  . /usr/share/java-utils/java-functions
+else
+  echo "Can't read Java functions library, aborting"
+  exit 1
+fi
+
+LOGGING_CONFIG="-Djava.util.logging.config.file=$CATALINA_BASE/conf/logging.properties"
+LOGGING_CONFIG="${LOGGING_CONFIG} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+
+JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
+JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote"
+JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote.port=50000"
+JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote.ssl=false"
+JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote.authenticate=false"
+
+set_javacmd
+
+# CLASSPATH munging
+if [ -n "$JSSE_HOME" ]; then
+  CLASSPATH="${CLASSPATH}:$(build-classpath jcert jnet jsse 2>/dev/null)"
+fi
+CLASSPATH="${CLASSPATH}:${CATALINA_HOME}/bin/bootstrap.jar"
+CLASSPATH="${CLASSPATH}:${CATALINA_HOME}/bin/commons-logging-tomcat-juli.jar"
+CLASSPATH="${CLASSPATH}:${CATALINA_HOME}/bin/tomcat-juli.jar"
+CLASSPATH="${CLASSPATH}:$(build-classpath commons-daemon 2>/dev/null)"
+
+if [ "$1" = "start" ]; then
+  ${JAVACMD} $JAVA_OPTS $LOGGING_CONFIG $CATALINA_OPTS \
+    -classpath "$CLASSPATH" \
+    -Dcatalina.base="$CATALINA_BASE" \
+    -Dcatalina.home="$CATALINA_HOME" \
+    -Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" \
+    -Djava.io.tmpdir="$CATALINA_TMPDIR" \
+    org.apache.catalina.startup.Bootstrap start \
+    >> ${CATALINA_BASE}/logs/catalina.out 2>&1 &
+    if [ ! -z "$CATALINA_PID" ]; then
+      echo $! > $CATALINA_PID
+    fi
+elif [ "$1" = "start-security" ]; then
+  ${JAVACMD} $JAVA_OPTS $LOGGING_CONFIG $CATALINA_OPTS \
+    -classpath "$CLASSPATH" \
+    -Dcatalina.base="$CATALINA_BASE" \
+    -Dcatalina.home="$CATALINA_HOME" \
+    -Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" \
+    -Djava.io.tmpdir="$CATALINA_TMPDIR" \
+    -Djava.security.manager \
+    -Djava.security.policy="${CATALINA_BASE}/conf/catalina.policy" \
+    org.apache.catalina.startup.Bootstrap start \
+    >> ${CATALINA_BASE}/logs/catalina.out 2>&1 &
+    if [ ! -z "$CATALINA_PID" ]; then
+      echo $! > $CATALINA_PID
+    fi
+elif [ "$1" = "stop" ]; then
+  ${JAVACMD} $JAVA_OPTS $LOGGING_CONFIG \
+    -classpath "$CLASSPATH" \
+    -Dcatalina.base="$CATALINA_BASE" \
+    -Dcatalina.home="$CATALINA_HOME" \
+    -Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" \
+    -Djava.io.tmpdir="$CATALINA_TMPDIR" \
+    org.apache.catalina.startup.Bootstrap stop \
+    >> ${CATALINA_BASE}/logs/catalina.out 2>&1
+elif [ "$1" = "version" ]; then
+  ${JAVACMD} -classpath ${CATALINA_HOME}/lib/catalina.jar \
+    org.apache.catalina.util.ServerInfo
+else
+  echo "Usage: $0 {start|start-security|stop|version}"
+  exit 1
+fi
