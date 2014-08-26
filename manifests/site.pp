@@ -33,6 +33,14 @@ node 'template-jboss' {
 
 node template-frontlb { }
 
+node template-tomcat {
+  notice("Setting host $fqdn using Puppet ($puppetversion), to host Tomcat server")
+
+  tomcat7::setup { 'tomcat7':
+  
+  }
+}
+
 node /vm-jboss*/ inherits template-jboss {
 
   $app_java_opts='-XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -Dsun.lang.ClassLoader.allowArraySyntax=true -XX:+UseLargePages -XX:LargePageSizeInBytes=4m'
@@ -60,4 +68,8 @@ node vm-puppet inherits template-jboss {
   jboss-as::base { 'jboss-soap': 
     jvm_memory => '1024',
   }
+}
+
+node vm-tomcattest inherits template-tomcat {
+
 }
