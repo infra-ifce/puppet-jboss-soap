@@ -1,6 +1,6 @@
 define jboss-as::base($product_name='jboss-soap', $product_home='/usr/share/jboss-soap/jboss-as/', $profile='production', $jvm_memory='4096', $proxy_list="$fqdn:6666") {
 
-  $perm_size='256'
+  $perm_size='1024'
   $user='jboss'
   $group=$user
   $java_library_path="$product_home/jboss-ep-5.2/native/lib64"
