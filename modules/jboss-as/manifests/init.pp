@@ -1,4 +1,4 @@
-define jboss-as::base($product_name='jboss-soap', $product_home='/usr/share/jboss-soap/jboss-as/', $profile='production', $jvm_memory='2048', $proxy_list="$fqdn:6666") {
+define jboss-as::base($product_name='jboss-soap', $product_home='/usr/share/jboss-soap/jboss-as/', $profile='production', $jvm_memory='4096', $proxy_list="$fqdn:6666") {
 
   $perm_size='256'
   $user='jboss'
@@ -39,7 +39,7 @@ define jboss-as::base($product_name='jboss-soap', $product_home='/usr/share/jbos
   }
 }
 
-define jboss-as::os_tuning($kernel_shmmax='4294967296', $kernel_shmall='1048576', $vm_hugetlb_shm_group='500',$vm_nr_hugepages='1536') {
+define jboss-as::os_tuning($kernel_shmmax='8589934592', $kernel_shmall='1572864', $vm_hugetlb_shm_group='500',$vm_nr_hugepages='3072') {
   sysctl { 'kernel.shmmax': value => $kernel_shmmax }
   sysctl { 'kernel.shmall': value => $kernel_shmall }
   sysctl { 'vm.hugetlb_shm_group': value => $vm_hugetlb_shm_group }
