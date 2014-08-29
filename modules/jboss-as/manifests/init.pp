@@ -39,11 +39,18 @@ define jboss-as::base($product_name='jboss-soap', $product_home='/usr/share/jbos
   }
 }
 
-define jboss-as::os_tuning($kernel_shmmax='8589934592', $kernel_shmall='1572864', $vm_hugetlb_shm_group='500',$vm_nr_hugepages='3072') {
+define jboss-as::os_tuning($kernel_shmmax='8589934592', $kernel_shmall='1572864', $vm_hugetlb_shm_group='500', $vm_nr_hugepages='3072', $limit_value='6291456') {
   sysctl { 'kernel.shmmax': value => $kernel_shmmax }
   sysctl { 'kernel.shmall': value => $kernel_shmall }
   sysctl { 'vm.hugetlb_shm_group': value => $vm_hugetlb_shm_group }
   sysctl { 'vm.nr_hugepages': value => $vm_nr_hugepages }
+
+  file { "/etc/security/limits.conf":
+    content => template("jboss-as/limits.conf.erb"),
+    owner => root,
+    group => root,
+    require => Package[$product_name],
+  }
 }
 
 define jboss-as::jvmRoute($jvmRoute=$name, $product_home, $profile, $user='jboss', $group='jboss', $product_name='jboss-soap') {
