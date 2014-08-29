@@ -47,7 +47,7 @@
 #ftp             hard    nproc           0
 #@student        -       maxlogins       4
 
-<%= user %>     soft     memlock     <%= limit_value %> 
-<%= user %>     hard     memlock     <%= limit_value %>
+<%= @domain_value %>     soft     memlock     <%= @limit_value %> 
+<%= @domain_value %>     hard     memlock     <%= @limit_value %>
 
 # End of file
