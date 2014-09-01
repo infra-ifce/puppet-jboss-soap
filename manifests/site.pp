@@ -1,3 +1,19 @@
+node 'base-rhel' {
+  
+  include sysconfig::network_interface
+  include sysconfig::tty 
+
+  include postfix::postfix
+  include ifce::profile
+
+  include ntp::ntp_servers
+  include ntp::ntpd 
+
+  #include resolv::resolv_conf
+
+  include snmp::snmpd
+}
+
 node 'template-jboss' {
 
   notice("Setting host $fqdn using Puppet ($puppetversion).")
