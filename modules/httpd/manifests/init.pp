@@ -14,7 +14,6 @@ define httpd::base($httpd_mod_cluster_packages=['httpd','mod_cluster-tomcat7'], 
     owner => 'root',
     group => 'root',
     mode => 644,
-    require => Package[$httpd_mod_cluster_packages]
   }
 }
 
