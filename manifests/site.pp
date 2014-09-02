@@ -57,6 +57,8 @@ node template-tomcat {
   }
 }
 
+node default inherits base-rhel { }
+
 node /vm-jboss*/ inherits template-jboss {
 
   $app_java_opts='-XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -Dsun.lang.ClassLoader.allowArraySyntax=true -XX:+UseLargePages -XX:LargePageSizeInBytes=4m'
