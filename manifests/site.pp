@@ -68,7 +68,7 @@ node /vm-jboss*/ inherits template-jboss {
   $app_java_opts='-XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -Dsun.lang.ClassLoader.allowArraySyntax=true -XX:+UseLargePages -XX:LargePageSizeInBytes=4m'
   jboss-as::base { 'jboss-soap': 
     jvm_memory => '2048',
-    proxy_list => "vm-frontlb.ifce.lan:6666",
+    proxy_list => "vm-frontlbdev.ifce.lan:6666",
   } 
 
 }

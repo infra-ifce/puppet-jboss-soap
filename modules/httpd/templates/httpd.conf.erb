@@ -186,17 +186,26 @@ LoadModule userdir_module modules/mod_userdir.so
 LoadModule alias_module modules/mod_alias.so
 LoadModule rewrite_module modules/mod_rewrite.so
 LoadModule proxy_module modules/mod_proxy.so
-LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
+#LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
 LoadModule proxy_ftp_module modules/mod_proxy_ftp.so
 LoadModule proxy_http_module modules/mod_proxy_http.so
 LoadModule proxy_connect_module modules/mod_proxy_connect.so
 LoadModule cache_module modules/mod_cache.so
 LoadModule suexec_module modules/mod_suexec.so
 LoadModule disk_cache_module modules/mod_disk_cache.so
-LoadModule file_cache_module modules/mod_file_cache.so
-LoadModule mem_cache_module modules/mod_mem_cache.so
 LoadModule cgi_module modules/mod_cgi.so
-LoadModule version_module modules/mod_version.so
+
+# Using mod_jk, mod_cluster in EWS 1.0.2
+#
+# mod_jk
+#LoadModule jk_module modules/mod_jk.so
+#
+# mod_cluster
+# mod_proxy_balancer should be disabled when mod_cluster is used
+#LoadModule proxy_cluster_module modules/mod_proxy_cluster.so
+#LoadModule slotmem_module modules/mod_slotmem.so
+#LoadModule manager_module modules/mod_manager.so
+#LoadModule advertise_module modules/mod_advertise.so
 
 #
 # The following modules are not loaded by default:
@@ -324,16 +333,13 @@ DocumentRoot "/var/www/html"
 # It can be "All", "None", or any combination of the keywords:
 #   Options FileInfo AuthConfig Limit
 #
-    AllowOverride All 
+    AllowOverride None
 
 #
 # Controls who can get stuff from this server.
-#	
-	Order allow,deny
-	Allow from all
-#POUR MEP	Order deny,allow
-#POUR MEP	Deny from all
-#POUR MEP	Allow from 10.211. 10.210. 195.101.232.64/26 81.252.125.224/28
+#
+    Order allow,deny
+    Allow from all
 
 </Directory>
 
@@ -391,7 +397,7 @@ DocumentRoot "/var/www/html"
 # negotiated documents.  The MultiViews Option can be used for the 
 # same purpose, but it is much slower.
 #
-DirectoryIndex index.html index.htm
+DirectoryIndex index.html index.html.var
 
 #
 # AccessFileName: The name of the file to look for in each directory
@@ -479,7 +485,7 @@ ErrorLog logs/error_log
 # Possible values include: debug, info, notice, warn, error, crit,
 # alert, emerg.
 #
-LogLevel debug
+LogLevel warn
 
 #
 # The following directives define some format nicknames for use with
@@ -524,8 +530,7 @@ CustomLog logs/access_log combined
 # Set to "EMail" to also include a mailto: link to the ServerAdmin.
 # Set to one of:  On | Off | EMail
 #
-#ServerSignature On
-ServerSignature Off
+ServerSignature Off 
 
 #
 # Aliases: Add here as many aliases as you need (with no limit). The format is 
@@ -884,7 +889,7 @@ Alias /error/ "/var/www/error/"
 # handle known problems with browser implementations.
 #
 BrowserMatch "Mozilla/2" nokeepalive
-BrowserMatch "MSIE 4\.0b2;" nokeepalive downgrade-1.0 force-response-1.0
+BrowserMatch ".*MSIE [2-5]\..*" nokeepalive downgrade-1.0 force-response-1.0
 BrowserMatch "RealPlayer 4\.0" force-response-1.0
 BrowserMatch "Java/1\.0" force-response-1.0
 BrowserMatch "JDK/1\.0" force-response-1.0
@@ -916,12 +921,12 @@ BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
 #    Allow from .example.com
 #</Location>
 <Location /server-status>
-    SetHandler server-status
-    Order deny,allow
-    Deny from all
-    Allow from 127.0.0.1
-    Allow from 10.211.162.84
-    Allow from 10.211.165.11
+	SetHandler server-status
+	Order deny,allow
+	Deny from all
+	Allow from 127.0.0.1
+	Allow from 10.211.162.84
+	Allow from 10.211.165.11
 </Location>
 
 #
@@ -994,7 +999,7 @@ BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
 #
 # Use name-based virtual hosting.
 #
-NameVirtualHost *:80
+#NameVirtualHost *:80
 #
 # NOTE: NameVirtualHost cannot be used without a port specifier 
 # (e.g. :80) if mod_ssl is being used, due to the nature of the
@@ -1014,6 +1019,3 @@ NameVirtualHost *:80
 #    ErrorLog logs/dummy-host.example.com-error_log
 #    CustomLog logs/dummy-host.example.com-access_log common
 #</VirtualHost>
-
-#POUR APPLIS:
-#SetEnv APPLICATIONS_ENV PROD
