@@ -10,7 +10,7 @@ define httpd::base($httpd_mod_cluster_packages=['httpd','mod_cluster-tomcat7'], 
   }
 
   file { "/etc/httpd/conf/httpd.conf":
-    content => template("templates/httpd.conf.erb"),
+    content => template("httpd/httpd.conf.erb"),
     owner => 'root',
     group => 'root',
     mode => 644,
