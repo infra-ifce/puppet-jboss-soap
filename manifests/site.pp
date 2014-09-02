@@ -9,12 +9,12 @@ node 'base-rhel' {
   include ntp::ntp_servers
   include ntp::ntpd 
 
-  #include resolv::resolv_conf
+  include resolv::resolv_conf
 
   include snmp::snmpd
 }
 
-node 'template-jboss' {
+node 'template-jboss' inherits base-rhel {
 
   notice("Setting host $fqdn using Puppet ($puppetversion).")
   
@@ -47,17 +47,17 @@ node 'template-jboss' {
   }
 }
 
-node template-frontlb { }
+node template-frontlb inherits base-rhel { 
 
-node template-tomcat {
+}
+
+node template-tomcat inherits base-rhel {
   notice("Setting host $fqdn using Puppet ($puppetversion), to host Tomcat server")
 
   tomcat7::setup { 'tomcat7':
   
   }
 }
-
-node default inherits base-rhel { }
 
 node /vm-jboss*/ inherits template-jboss {
 
@@ -88,6 +88,6 @@ node vm-puppet inherits template-jboss {
   }
 }
 
-node /vm-tomcat*/ inherits template-tomcat {
+node /vm-tomcat*/ inherits template-tomcat { 
 
 }
