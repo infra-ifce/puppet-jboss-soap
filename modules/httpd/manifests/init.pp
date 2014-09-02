@@ -8,6 +8,9 @@ define httpd::base($httpd_mod_cluster_packages=['httpd','mod_cluster-tomcat7'], 
     enable => true,
     ensure => running,
   }
+
+ mode => '644'
+
 }
 
 define httpd::mod_cluster_conf($httpd_conf='/etc/httpd/conf.d', $modcluster_cache='/var/cache/mod_cluster', $modcluster_port='6666', $modcluster_bind_address='*', $httpd_mod_cluster_packages=['httpd'], $httpd_service_name='httpd') {
