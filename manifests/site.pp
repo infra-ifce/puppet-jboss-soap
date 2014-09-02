@@ -86,6 +86,6 @@ node vm-puppet inherits template-jboss {
   }
 }
 
-node vm-tomcattest inherits template-tomcat {
+node /vm-tomcat*/ inherits template-tomcat {
 
 }
