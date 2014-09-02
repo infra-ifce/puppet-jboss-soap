@@ -47,8 +47,9 @@ define jboss-as::os_tuning($kernel_shmmax='8589934592', $kernel_shmall='1572864'
 
   file { "/etc/security/limits.conf":
     content => template("jboss-as/limits.conf.erb"),
-    owner => root,
-    group => root,
+    owner => 'root',
+    group => 'root',
+    mode => 644
   }
 }
 
