@@ -47,9 +47,13 @@ node 'template-jboss' inherits base-rhel {
   }
 }
 
-node template-frontlb inherits base-rhel { 
+node template-frontlb inherits base-rhel { }
 
-}
+node template-nfs inherits base-rhel { }
+
+node template-zend inherits base-rhel { }
+
+node template-cups inherits base-rhel { }
 
 node template-tomcat inherits base-rhel {
   notice("Setting host $fqdn using Puppet ($puppetversion), to host Tomcat server")
@@ -88,6 +92,13 @@ node vm-puppet inherits template-jboss {
   }
 }
 
-node /vm-tomcat*/ inherits template-tomcat { 
+node /vm-tomcat*/ inherits template-tomcat { }
 
-}
+node /vm-reports*/ inherits template-tomcat { }
+
+node /vm-restitution*/ inherits template-nfs { }
+
+node /vm-zend*/ inherits template-zend { }
+
+node /vm-editique*/ inherits template-cups { }
+
