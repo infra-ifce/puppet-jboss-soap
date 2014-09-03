@@ -51,6 +51,8 @@ node template-frontlb inherits base-rhel { }
 
 node template-frontws inherits base-rhel { }
 
+node template-lamp inherits base-rhel { }
+
 node template-nfs inherits base-rhel { }
 
 node template-mysql inherits base-rhel { }
@@ -100,6 +102,8 @@ node vm-puppet inherits template-jboss {
 }
 
 node /vm-frontws*/ inherits template-frontws { }
+
+node /vm-lamp*/ inherits template-lamp { }
 
 node /vm-tomcat*/ inherits template-tomcat { }
 
