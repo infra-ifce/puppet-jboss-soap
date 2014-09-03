@@ -51,6 +51,8 @@ node template-frontlb inherits base-rhel { }
 
 node template-nfs inherits base-rhel { }
 
+node template-mysql inherits base-rhel { }
+
 node template-zend inherits base-rhel { 
   httpd::base { 'httpd-setup': }
   zendserver6::base { 'zendserver6': }
@@ -100,6 +102,8 @@ node /vm-tomcat*/ inherits template-tomcat { }
 node /vm-reports*/ inherits template-tomcat { }
 
 node /vm-restitution*/ inherits template-nfs { }
+
+node /vm-mysql*/ inherits template-mysql { }
 
 node /vm-zend*/ inherits template-zend { }
 
