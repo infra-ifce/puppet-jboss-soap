@@ -1,4 +1,4 @@
-define zendserver6::base($zendserver_packages=['zend-server-php-5.3','php-5.3-java-bridge-zend-server'], $zendserver_service_name='zend-server') {
+define zendserver6::base($zendserver_packages=['zend-server-php-5.3','php-5.3-java-bridge-zend-server','java-1.7.0-openjdk'], $zendserver_service_name='zend-server', $zendserver_home='/usr/local/zend') {
 
   package {$zendserver_packages:
     ensure => installed
@@ -9,6 +9,10 @@ define zendserver6::base($zendserver_packages=['zend-server-php-5.3','php-5.3-ja
     ensure => running,
     require => Package[$zendserver_packages]
   }
+
+#  exec { "/bin/sh $zendserver_home/bin/setup_jb.sh":
+#    require => Package[$zendserver_packages]
+#  }
 
   file { "/usr/local/jboss-client":
     ensure  => directory,
