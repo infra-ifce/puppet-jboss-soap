@@ -7,7 +7,12 @@ define zendserver6::base($zendserver_packages=['zend-server-php-5.3','php-5.3-ja
   service {$zendserver_service_name:
     enable => true,
     ensure => running,
-    require => $zendserver_packages
+    require => Package[$zendserver_packages]
+  }
+
+  file { "/usr/local/jboss-client":
+    ensure  => directory,
+    require => Package[$zendserver_packages]
   }
 
 }
