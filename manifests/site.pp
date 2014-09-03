@@ -49,6 +49,8 @@ node 'template-jboss' inherits base-rhel {
 
 node template-frontlb inherits base-rhel { }
 
+node template-frontws inherits base-rhel { }
+
 node template-nfs inherits base-rhel { }
 
 node template-mysql inherits base-rhel { }
@@ -96,6 +98,8 @@ node vm-puppet inherits template-jboss {
     jvm_memory => '1024',
   }
 }
+
+node /vm-frontws*/ inherits template-frontws { }
 
 node /vm-tomcat*/ inherits template-tomcat { }
 
