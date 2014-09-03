@@ -52,7 +52,6 @@ node template-frontlb inherits base-rhel { }
 node template-nfs inherits base-rhel { }
 
 node template-zend inherits base-rhel { 
-  httpd::base { 'httpd-setup': }
   zendserver6::base { 'zendserver6': }
 }
 
