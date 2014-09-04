@@ -18,10 +18,11 @@ LOGGING_CONFIG="-Djava.util.logging.config.file=$CATALINA_BASE/conf/logging.prop
 LOGGING_CONFIG="${LOGGING_CONFIG} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
 
 JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
-JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote"
-JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote.port=50000"
-JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote.ssl=false"
-JAVA_OPTS="${JAVA_OPTS} -Dcom.sun.management.jmxremote.authenticate=false"
+JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote"
+JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote=true"
+JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.port=50000"
+JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.ssl=false"
+JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.authenticate=false"
 
 set_javacmd
 
