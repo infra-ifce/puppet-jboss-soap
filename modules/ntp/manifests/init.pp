@@ -1,7 +1,7 @@
 class ntp::ntp_servers {
 
    host { 'ntp1':
-      host_aliases => ['ntp1.intranet.haras-nationaux.fr','ntp1.ifce.lan'],
+      host_aliases => ['ntp1.ifce.lan', 'ntp1.intranet.haras-nationaux.fr'],
       ip => '10.211.162.11',
     }
   
@@ -14,9 +14,9 @@ class ntp::ntp_servers {
 
 class ntp::ntpd {
 
-  $ntp_service_name='ntpd'
+  $product_name='ntp'
 
-  package { $ntp_service_name: 
+  package { $product_name: 
     ensure => installed,
   }
 
