@@ -17,13 +17,13 @@ JAVA_HOME="/usr/lib/jvm/java/"
 <% end %>
 
 # Where your tomcat installation lives
-CATALINA_BASE="<% catalina_base %>"
-CATALINA_HOME="<% catalina_base %>"
-JASPER_HOME="<% catalina_base %>"
+CATALINA_BASE="<% @catalina_base %>"
+CATALINA_HOME="<% @catalina_base %>"
+JASPER_HOME="<% @catalina_base %>"
 CATALINA_TMPDIR="/var/cache/tomcat7/temp"
 
 # You can pass some parameters to java here if you wish to
-#JAVA_OPTS="-Xms<%= jvm_memory %>m -Xmx<%= jvm_memory %>m -XX:PermSize=<%= perm_size %>m -XX:MaxPermSize=<%= perm_size %>m -server"
+#JAVA_OPTS="-Xms<%= @jvm_memory %>m -Xmx<%= @jvm_memory %>m -XX:PermSize=<%= @perm_size %>m -XX:MaxPermSize=<%= @perm_size %>m -server"
 
 # Use JAVA_OPTS to set java.library.path for libtcnative.so
 JAVA_OPTS="-Djava.library.path=/usr/lib64"
@@ -38,7 +38,7 @@ JAVA_OPTS="-Djava.library.path=/usr/lib64"
 #JAVA_OPTS="${JAVA_OPTS} -Djavax.sql.DataSource.Factory=org.apache.commons.dbcp.BasicDataSourceFactory"
 
 # What user should run tomcat
-TOMCAT_USER="<% tomcat_user %>"
+TOMCAT_USER="<% @tomcat_user %>"
 
 # You can change your tomcat locale here
 #LANG="en_US"
