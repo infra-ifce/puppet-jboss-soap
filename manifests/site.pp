@@ -16,7 +16,7 @@ node 'base-rhel' {
 
 node 'template-jboss' inherits base-rhel {
 
-  notice("Setting host $fqdn using Puppet ($puppetversion).")
+  notice("Setting host $fqdn using Puppet ($puppetversion), to host JBoss SOA-P server")
   
   $profile_name='ifce'
   $product_home='/usr/share/jboss-soap/jboss-as/'
@@ -47,21 +47,41 @@ node 'template-jboss' inherits base-rhel {
   }
 }
 
-node template-frontlb inherits base-rhel { }
+node template-frontlb inherits base-rhel { 
+  notice("Setting host $fqdn using Puppet ($puppetversion), to host Front Mod_cluster server")
 
-node template-frontws inherits base-rhel { }
-
-node template-lamp inherits base-rhel { }
-
-node template-nfs inherits base-rhel { }
-
-node template-mysql inherits base-rhel { }
-
-node template-zend inherits base-rhel { 
-  zendserver6::base { 'zendserver6': }
 }
 
-node template-cups inherits base-rhel { }
+node template-frontws inherits base-rhel { 
+  notice("Setting host $fqdn using Puppet ($puppetversion), to host Front Mod_jk server")
+
+}
+
+node template-lamp inherits base-rhel { 
+  notice("Setting host $fqdn using Puppet ($puppetversion), to host LAMP server")
+
+}
+
+node template-nfs inherits base-rhel { 
+  notice("Setting host $fqdn using Puppet ($puppetversion), to host NFS server")
+
+}
+
+node template-mysql inherits base-rhel { 
+  notice("Setting host $fqdn using Puppet ($puppetversion), to host MySQL server")
+
+}
+
+node template-zend inherits base-rhel {  
+  notice("Setting host $fqdn using Puppet ($puppetversion), to host Zend server")
+  zendserver6::base { 'zendserver6': }
+
+}
+
+node template-cups inherits base-rhel { 
+  notice("Setting host $fqdn using Puppet ($puppetversion), to host Cups server")
+
+}
 
 node template-tomcat inherits base-rhel {
   notice("Setting host $fqdn using Puppet ($puppetversion), to host Tomcat server")
