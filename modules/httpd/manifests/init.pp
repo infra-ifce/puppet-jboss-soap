@@ -1,4 +1,4 @@
-define httpd::base($httpd_mod_cluster_packages=['httpd','mod_cluster-tomcat7'], $httpd_service_name='httpd') {
+define httpd::base($httpd_mod_cluster_packages=['httpd','mod_cluster-native'], $httpd_service_name='httpd') {
 
   package { $httpd_mod_cluster_packages:
     ensure => installed,
