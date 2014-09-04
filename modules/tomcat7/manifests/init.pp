@@ -1,4 +1,4 @@
-define tomcat7::setup($catalina_base='/usr/share/tomcat7', $packages=[ 'java-1.7.0-openjdk', 'tomcat7']) {
+define tomcat7::setup($catalina_base='/usr/share/tomcat7', $packages=[ 'java-1.7.0-openjdk', 'tomcat7', 'tomcat7-admin-webapps', 'tomcat7-log4j', 'tomcat-native']) {
 
   package { $packages:
     ensure => installed,
