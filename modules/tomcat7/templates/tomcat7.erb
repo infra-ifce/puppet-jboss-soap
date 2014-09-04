@@ -15,14 +15,8 @@ else
 fi
 
 LOGGING_CONFIG="-Djava.util.logging.config.file=$CATALINA_BASE/conf/logging.properties"
-LOGGING_CONFIG="${LOGGING_CONFIG} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
 
-CATALINA_OPTS="$CATALINA_OPTS -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
-CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote"
-CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote=true"
-CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.port=50000"
-CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.ssl=false"
-CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.authenticate=false"
+JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager"
 
 set_javacmd
 
@@ -36,6 +30,11 @@ CLASSPATH="${CLASSPATH}:${CATALINA_HOME}/bin/tomcat-juli.jar"
 CLASSPATH="${CLASSPATH}:$(build-classpath commons-daemon 2>/dev/null)"
 
 if [ "$1" = "start" ]; then
+  CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote"
+  CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote=true"
+  CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.port=50000"
+  CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.ssl=false"
+  CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote.authenticate=false"
   ${JAVACMD} $JAVA_OPTS $LOGGING_CONFIG $CATALINA_OPTS \
     -classpath "$CLASSPATH" \
     -Dcatalina.base="$CATALINA_BASE" \
