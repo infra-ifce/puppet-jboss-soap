@@ -14,6 +14,12 @@ class ntp::ntp_servers {
 
 class ntp::ntpd {
 
+  $ntp_service_name='ntpd'
+
+  package { $ntp_service_name: 
+    ensure => installed,
+  }
+
   file { '/etc/ntp.conf':
       source => 'puppet:///modules/ntp/ntp.conf',
       mode => 644, owner => 'root', group => 'root',
